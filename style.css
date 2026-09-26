@@ -185,3 +185,31 @@ body {
     justify-content: center;
     align-items: center;
 }
+/* স্পিন বাটন ঘূর্ণায়মান অ্যানিমেশন */
+#spin-btn {
+    width: 75px;
+    height: 75px;
+    background: radial-gradient(circle, #ffe066 0%, #8c5d2b 70%, #3a220f 100%);
+    border: 3px solid #ffebad;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    font-size: 2.2rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.1s, background 0.3s;
+}
+
+/* স্পিন চালু হলে এই ক্লাসটি যোগ হয়ে বাটনটি ঘুরবে */
+#spin-btn.spinning {
+    animation: buttonRotate 0.6s linear infinite;
+    background: radial-gradient(circle, #ffebad 0%, #a06d3b 70%, #4a2c13 100%);
+    pointer-events: none; /* স্পিন চলাকালীন ক্লিক ব্লক করার জন্য */
+}
+
+@keyframes buttonRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); } /* পিজি সফট-এর মতো উল্টো দিকে ঘুরবে */
+}
