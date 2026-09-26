@@ -1,4 +1,15 @@
-const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', 'A', 'K', 'Q', 'J'];
+const SYMBOLS = [
+    { name: 'wild', img: 'images/sym_wild.png', isHigh: true },
+    { name: 'scatter', img: 'images/sym_scatter.png', isHigh: true },
+    { name: 'pistol', img: 'images/sym_pistol.png', isHigh: true },
+    { name: 'whiskey', img: 'images/sym_whiskey.png', isHigh: true },
+    { name: 'hat', img: 'images/sym_hat.png', isHigh: true },
+    { name: 'A', img: 'images/sym_a.png', isHigh: false },
+    { name: 'K', img: 'images/sym_k.png', isHigh: false },
+    { name: 'Q', img: 'images/sym_q.png', isHigh: false },
+    { name: 'J', img: 'images/sym_j.png', isHigh: false }
+];
+
 const REEL_CONFIG =;
 const MULTIPLIER_STEPS =;
 
@@ -32,15 +43,21 @@ function getRandomSymbol() {
     return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
 }
 
-function createSymbolElement(sym) {
+function createSymbolElement(symbolData) {
     const div = document.createElement('div');
     div.className = 'symbol';
-    div.innerText = sym;
+    div.dataset.name = symbolData.name;
+    
+    const img = document.createElement('img');
+    img.src = symbolData.img;
+    img.alt = symbolData.name;
+    
+    div.appendChild(img);
     return div;
 }
 
 function updateFeatureBuyPrice() {
-    featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`;
+    featureBuyBtn.innerHTML = `FEATURE BUY <br><span style="font-size:0.75rem; color:#ffd700;">Tk ${(bet * 75).toFixed(2)}</span>`;
 }
 
 async function spin() {
@@ -48,7 +65,7 @@ async function spin() {
     
     if (!isFreeSpinsMode) {
         if (balance < bet) {
-            alert("পর্যাপ্ত ব্যালেন্স নেই!");
+            alert("ব্যালেন্স নেই!");
             return;
         }
         balance -= bet;
@@ -84,7 +101,7 @@ featureBuyBtn.addEventListener('click', () => {
     if (isSpinning || isFreeSpinsMode) return;
     let cost = bet * 75;
     if (balance < cost) {
-        alert("ফিচার কেনার জন্য পর্যাপ্ত ব্যালেন্স নেই!");
+        alert("ব্যালেন্স নেই!");
         return;
     }
     balance -= cost;
@@ -93,7 +110,7 @@ featureBuyBtn.addEventListener('click', () => {
     isFreeSpinsMode = true;
     freeSpinsLeft = 10;
     slotGrid.classList.add('free-spins-active');
-    spinBtn.innerText = `🎁 ${freeSpinsLeft}`;
+    spinBtn.innerText = `🎁`;
     setTimeout(spin, 1000);
 });
 
@@ -103,10 +120,11 @@ async function checkWinAndCascade() {
     reels.forEach((reel) => {
         const symbols = reel.querySelectorAll('.symbol');
         let counts = {};
-        symbols.forEach(s => counts[s.innerText] = (counts[s.innerText] || 0) + 1);
+        symbols.forEach(s => counts[s.dataset.name] = (counts[s.dataset.name] || 0) + 1);
         
         symbols.forEach(s => {
-            if (counts[s.innerText] >= 2 && (s.innerText === '🤠' || s.innerText === '🪙' || s.innerText === '🔫')) {
+            const name = s.dataset.name;
+            if (counts[name] >= 2 && name !== 'A' && name !== 'J') {
                 s.classList.add('pop');
                 hasWin = true;
             }
@@ -115,8 +133,7 @@ async function checkWinAndCascade() {
 
     if (hasWin) {
         let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];
-        let winAmount = bet * activeMultiplier * 2;
-        balance += winAmount;
+        balance += bet * activeMultiplier * 1.8;
         balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
         
         if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) {
@@ -139,12 +156,11 @@ async function checkWinAndCascade() {
         if (isFreeSpinsMode) {
             freeSpinsLeft--;
             if (freeSpinsLeft > 0) {
-                spinBtn.innerText = `🎁 ${freeSpinsLeft}`;
                 setTimeout(spin, 800);
             } else {
                 isFreeSpinsMode = false;
                 slotGrid.classList.remove('free-spins-active');
-                spinBtn.innerText = '🔥';
+                spinBtn.innerText = '↻';
                 isSpinning = false;
                 alert("ফ্রি স্পিন শেষ!");
             }
