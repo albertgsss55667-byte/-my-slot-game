@@ -34,89 +34,158 @@
 <body>
     <div class="game-container">
         <div class="multiplier-bar">
-            <span id="m1" class="active">X1</span><span id="m2">X2</span><span id="m4">X4</span><span id="m512">X512</span><span id="m1024">X1024</span>
+            <span id="m1" class="active">X1</span>
+            <span id="m2">X2</span>
+            <span id="m4">X4</span>
+            <span id="m512">X512</span>
+            <span id="m1024">X1024</span>
         </div>
         <div class="slot-machine" id="slot-grid">
-            <div class="reel" id="reel1" data-rows="3"></div><div class="reel" id="reel2" data-rows="4"></div><div class="reel" id="reel3" data-rows="5"></div>
-            <div class="reel" id="reel4" data-rows="5"></div><div class="reel" id="reel5" data-rows="4"></div><div class="reel" id="reel6" data-rows="3"></div>
+            <div class="reel" id="reel1" data-rows="3"></div>
+            <div class="reel" id="reel2" data-rows="4"></div>
+            <div class="reel" id="reel3" data-rows="5"></div>
+            <div class="reel" id="reel4" data-rows="5"></div>
+            <div class="reel" id="reel5" data-rows="4"></div>
+            <div class="reel" id="reel6" data-rows="3"></div>
         </div>
         <div class="feature-buy-container">
             <button id="feature-buy-btn">FEATURE BUY <br><span id="feature-price">Tk 150.00</span></button>
         </div>
         <div class="control-panel">
-            <div class="balance-info"><span>ব্যালেন্স: <span id="balance">Tk 1000.00</span></span><span>বেট: <span id="bet">Tk 2.00</span></span></div>
-            <div class="buttons"><button id="minus-btn">-</button><button id="spin-btn">↻</button><button id="plus-btn">+</button></div>
+            <div class="balance-info">
+                <span>ব্যালেন্স: <span id="balance">Tk 1000.00</span></span>
+                <span>বেট: <span id="bet">Tk 2.00</span></span>
+            </div>
+            <div class="buttons">
+                <button id="minus-btn">-</button>
+                <button id="spin-btn">↻</button>
+                <button id="plus-btn">+</button>
+            </div>
         </div>
     </div>
+
     <script>
-        const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', '🎩', 'A', 'K', 'Q', 'J'], REEL_CONFIG =, MULTIPLIER_STEPS =;
-        let balance = 1000.00, bet = 2.00, currentMultiplierIndex = 0, isSpinning = false, isFreeSpinsMode = false, freeSpinsLeft = 0;
-        const reels = document.querySelectorAll('.reel'), spinBtn = document.getElementById('spin-btn'), balanceDisplay = document.getElementById('balance'), betDisplay = document.getElementById('bet'), slotGrid = document.getElementById('slot-grid'), featureBuyBtn = document.getElementById('feature-buy-btn'), featurePriceDisplay = document.getElementById('feature-price');
-        
+        const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', '🎩', 'A', 'K', 'Q', 'J'];
+        const REEL_CONFIG =;
+        const MULTIPLIER_STEPS =;
+        let balance = 1000.00;
+        let bet = 2.00;
+        let currentMultiplierIndex = 0;
+        let isSpinning = false;
+        let isFreeSpinsMode = false;
+        let freeSpinsLeft = 0;
+
+        const reels = document.querySelectorAll('.reel');
+        const spinBtn = document.getElementById('spin-btn');
+        const balanceDisplay = document.getElementById('balance');
+        const betDisplay = document.getElementById('bet');
+        const slotGrid = document.getElementById('slot-grid');
+        const featureBuyBtn = document.getElementById('feature-buy-btn');
+        const featurePriceDisplay = document.getElementById('feature-price');
+
         function initGame() {
-            reels.forEach((reel, index) => { reel.innerHTML = ''; for (let i = 0; i < REEL_CONFIG[index]; i++) { reel.appendChild(createSymbolElement(getRandomSymbol())); } });
-            if (spinBtn) { spinBtn.innerText = '↻'; spinBtn.classList.remove('spinning'); }
-            if (featurePriceDisplay) featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`;
+            if (!reels || reels.length === 0) return;
+            reels.forEach((reel, index) => {
+                const rows = REEL_CONFIG[index];
+                reel.innerHTML = '';
+                for (let i = 0; i < rows; i++) {
+                    reel.appendChild(createSymbolElement(getRandomSymbol()));
+                }
+            });
+            if (spinBtn) {
+                spinBtn.innerText = '↻';
+                spinBtn.classList.remove('spinning');
+            }
+            updateFeatureBuyPrice();
             isSpinning = false;
         }
-        function getRandomSymbol() { return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]; }
-        function createSymbolElement(sym) { const div = document.createElement('div'); div.className = 'symbol'; div.innerText = sym; return div; }
-        
+
+        function getRandomSymbol() {
+            return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+        }
+
+        function createSymbolElement(sym) {
+            const div = document.createElement('div');
+            div.className = 'symbol';
+            div.innerText = sym;
+            return div;
+        }
+
+        function updateFeatureBuyPrice() {
+            if (featurePriceDisplay) {
+                featurePriceDisplay.innerText = "Tk " + (bet * 75).toFixed(2);
+            }
+        }
+
         async function spin() {
             if (isSpinning) return;
-            if (!isFreeSpinsMode) { if (balance < bet) { alert("ব্যালেন্স নেই!"); return; } balance -= bet; balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`; }
-            isSpinning = true; spinBtn.classList.add('spinning'); currentMultiplierIndex = 0; updateMultiplierUI();
-            
+            if (!isFreeSpinsMode) {
+                if (balance < bet) {
+                    alert("ব্যালেন্স নেই!");
+                    return;
+                }
+                balance -= bet;
+                if (balanceDisplay) balanceDisplay.innerText = "Tk " + balance.toFixed(2);
+            }
+            isSpinning = true;
+            if (spinBtn) {
+                spinBtn.classList.add('spinning');
+                spinBtn.innerText = '↻';
+            }
+            currentMultiplierIndex = 0;
+            updateMultiplierUI();
+
             let spinPromises = Array.from(reels).map((reel, index) => {
                 return new Promise((resolve) => {
                     let cycles = 0;
                     let interval = setInterval(() => {
-                        reel.innerHTML = ''; for (let i = 0; i < REEL_CONFIG[index]; i++) { reel.appendChild(createSymbolElement(getRandomSymbol())); }
-                        cycles++; if (cycles > 10 + index * 2) { clearInterval(interval); resolve(); }
+                        reel.innerHTML = '';
+                        for (let i = 0; i < REEL_CONFIG[index]; i++) {
+                            reel.appendChild(createSymbolElement(getRandomSymbol()));
+                        }
+                        cycles++;
+                        if (cycles > 10 + index * 2) {
+                            clearInterval(interval);
+                            resolve();
+                        }
                     }, 60);
                 });
             });
-            await Promise.all(spinPromises); checkWinAndCascade();
+            await Promise.all(spinPromises);
+            checkWinAndCascade();
         }
-        
+
         async function checkWinAndCascade() {
             let hasWin = false;
             reels.forEach((reel) => {
-                const symbols = reel.querySelectorAll('.symbol'); let counts = {};
+                const symbols = reel.querySelectorAll('.symbol');
+                let counts = {};
                 symbols.forEach(s => counts[s.innerText] = (counts[s.innerText] || 0) + 1);
-                symbols.forEach(s => { if (counts[s.innerText] >= 2 && s.innerText !== 'A' && s.innerText !== 'J' && s.innerText !== 'Q') { s.classList.add('pop'); hasWin = true; } });
+                symbols.forEach(s => {
+                    if (counts[s.innerText] >= 2 && s.innerText !== 'A' && s.innerText !== 'J' && s.innerText !== 'Q') {
+                        s.classList.add('pop');
+                        hasWin = true;
+                    }
+                });
             });
+
             if (hasWin) {
-                balance += bet * MULTIPLIER_STEPS[currentMultiplierIndex] * 2; balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+                let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];
+                balance += (bet * activeMultiplier * 2);
+                if (balanceDisplay) balanceDisplay.innerText = "Tk " + balance.toFixed(2);
                 if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) currentMultiplierIndex++;
+                
                 await new Promise(r => setTimeout(r, 400));
+                
                 reels.forEach((reel, index) => {
                     reel.querySelectorAll('.symbol.pop').forEach(p => p.remove());
                     const needed = REEL_CONFIG[index] - reel.querySelectorAll('.symbol').length;
-                    for (let i = 0; i < needed; i++) { reel.insertBefore(createSymbolElement(getRandomSymbol()), reel.firstChild); }
+                    for (let i = 0; i < needed; i++) {
+                        reel.insertBefore(createSymbolElement(getRandomSymbol()), reel.firstChild);
+                    }
                 });
-                updateMultiplierUI(); setTimeout(checkWinAndCascade, 400);
+                updateMultiplierUI();
+                setTimeout(checkWinAndCascade, 400);
             } else {
-                spinBtn.classList.remove('spinning'); isSpinning = false;
-                if (isFreeSpinsMode) {
-                    freeSpinsLeft--;
-                    if (freeSpinsLeft > 0) { setTimeout(spin, 800); } 
-                    else { isFreeSpinsMode = false; slotGrid.classList.remove('free-spins-active'); alert("ফ্রি স্পিন শেষ!"); }
-                }
-            }
-        }
-        function updateMultiplierUI() {
-            document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));
-            const activeM = document.getElementById(`m${MULTIPLIER_STEPS[currentMultiplierIndex]}`);
-            if (activeM) activeM.classList.add('active');
-        }
-        if (featureBuyBtn) {
-            featureBuyBtn.addEventListener('click', () => {
-                if (isSpinning || isFreeSpinsMode) return;
-                let cost = bet * 75; if (balance < cost) { alert("ব্যালেন্স নেই!"); return; }
-                balance -= cost; balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
-                isFreeSpinsMode = true; freeSpinsLeft = 10; slotGrid.classList.add('free-spins-active'); setTimeout(spin, 500);
-            });
-        }
-        if (document.getElementById('plus-btn')) { document.getElementById('plus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode) { bet += 2; betDisplay.innerText = `Tk ${bet.toFixed(2)}`; if (featurePriceDisplay) featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`; } }); }
-if (document.getElementById('minus-btn')) { document.getElementById('minus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode && bet > 2) { bet -= 2; betDisplay.innerText = Tk ${bet.toFixed(2)}; if (featurePriceDisplay) featurePriceDisplay.innerText = Tk ${(bet * 75).toFixed(2)}; } }); }if (spinBtn) { spinBtn.addEventListener('click', () => { if (!isFreeSpinsMode) spin(); }); }window.onload = initGame; setTimeout(initGame, 300);
+                if (spinBtn) spinBtn.classList.remove('spinning');
+isSpinning = false;if (isFreeSpinsMode) {freeSpinsLeft--;if (freeSpinsLeft > 0) {setTimeout(spin, 800);} else {isFreeSpinsMode = false;if (slotGrid) slotGrid.classList.remove('free-spins-active');alert("ফ্রি স্পিন শেষ!");}}}}function updateMultiplierUI() {document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));const activeM = document.getElementById("m" + MULTIPLIER_STEPS[currentMultiplierIndex]);if (activeM) activeM.classList.add('active');}if (featureBuyBtn) {featureBuyBtn.addEventListener('click', () => {if (isSpinning || isFreeSpinsMode) return;let cost = bet * 75;if (balance < cost) {alert("ব্যালেন্স নেই!");return;}balance -= cost;if (balanceDisplay) balanceDisplay.innerText = "Tk " + balance.toFixed(2);isFreeSpinsMode = true;freeSpinsLeft = 10;if (slotGrid) slotGrid.classList.add('free-spins-active');setTimeout(spin, 500);});}if (document.getElementById('plus-btn')) {document.getElementById('plus-btn').addEventListener('click', () => {if (!isSpinning && !isFreeSpinsMode) {bet += 2;if (betDisplay) betDisplay.innerText = "Tk " + bet.toFixed(2);updateFeatureBuyPrice();}});}if (document.getElementById('minus-btn')) {document.getElementById('minus-btn').addEventListener('click', () => {if (!isSpinning && !isFreeSpinsMode && bet > 2) {bet -= 2;if (betDisplay) betDisplay.innerText = "Tk " + bet.toFixed(2);updateFeatureBuyPrice();}});}if (spinBtn) {spinBtn.addEventListener('click', () => {if (!isFreeSpinsMode) spin();});}window.onload = initGame;setTimeout(initGame, 300);
