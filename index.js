@@ -1,5 +1,3 @@
-// কাউবয় ওয়াইল্ড বাউন্টি থিম ইমোজি ম্যাপিং
-// 🤠 = কাউবয় মেয়ে (WILD), 🪙 = সোনার বার (SCATTER), 🔫 = পিস্তল, 🍾 = বোতল, 🎩 = হ্যাট
 const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', '🎩', 'A', 'K', 'Q', 'J'];
 const REEL_CONFIG =;
 const MULTIPLIER_STEPS =;
@@ -20,6 +18,7 @@ const featureBuyBtn = document.getElementById('feature-buy-btn');
 const featurePriceDisplay = document.getElementById('feature-price');
 
 function initGame() {
+    if (!reels || reels.length === 0) return;
     reels.forEach((reel, index) => {
         const rows = REEL_CONFIG[index];
         reel.innerHTML = '';
@@ -27,7 +26,7 @@ function initGame() {
             reel.appendChild(createSymbolElement(getRandomSymbol()));
         }
     });
-    spinBtn.innerText = '↻';
+    if (spinBtn) spinBtn.innerText = '↻';
     updateFeatureBuyPrice();
 }
 
@@ -57,12 +56,14 @@ async function spin() {
             return;
         }
         balance -= bet;
-        balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+        if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
     }
 
     isSpinning = true;
-    spinBtn.classList.add('spinning');
-    spinBtn.innerText = '↻';
+    if (spinBtn) {
+        spinBtn.classList.add('spinning');
+        spinBtn.innerText = '↻';
+    }
     
     currentMultiplierIndex = 0;
     updateMultiplierUI();
@@ -88,21 +89,23 @@ async function spin() {
     checkWinAndCascade();
 }
 
-featureBuyBtn.addEventListener('click', () => {
-    if (isSpinning || isFreeSpinsMode) return;
-    let cost = bet * 75;
-    if (balance < cost) {
-        alert("ফিচার কেনার জন্য পর্যাপ্ত ব্যালেন্স নেই!");
-        return;
-    }
-    balance -= cost;
-    balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
-    
-    isFreeSpinsMode = true;
-    freeSpinsLeft = 10;
-    slotGrid.classList.add('free-spins-active');
-    setTimeout(spin, 1000);
-});
+if (featureBuyBtn) {
+    featureBuyBtn.addEventListener('click', () => {
+        if (isSpinning || isFreeSpinsMode) return;
+        let cost = bet * 75;
+        if (balance < cost) {
+            alert("ফিচার কেনার জন্য পর্যাপ্ত ব্যালেন্স নেই!");
+            return;
+        }
+        balance -= cost;
+        if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+        
+        isFreeSpinsMode = true;
+        freeSpinsLeft = 10;
+        if (slotGrid) slotGrid.classList.add('free-spins-active');
+        setTimeout(spin, 1000);
+    });
+}
 
 async function checkWinAndCascade() {
     let hasWin = false;
@@ -124,7 +127,7 @@ async function checkWinAndCascade() {
         let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];
         let winAmount = bet * activeMultiplier * 2;
         balance += winAmount;
-        balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+        if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
         
         if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) {
             currentMultiplierIndex++;
@@ -149,16 +152,20 @@ async function checkWinAndCascade() {
                 setTimeout(spin, 800);
             } else {
                 isFreeSpinsMode = false;
-                slotGrid.classList.remove('free-spins-active');
-                spinBtn.classList.remove('spinning');
-                spinBtn.innerText = '↻';
+                if (slotGrid) slotGrid.classList.remove('free-spins-active');
+                if (spinBtn) {
+                    spinBtn.classList.remove('spinning');
+                    spinBtn.innerText = '↻';
+                }
                 isSpinning = false;
                 alert("ফ্রি স্পিন শেষ!");
             }
         } else {
             isSpinning = false;
-            spinBtn.classList.remove('spinning');
-            spinBtn.innerText = '↻';
+            if (spinBtn) {
+                spinBtn.classList.remove('spinning');
+                spinBtn.innerText = '↻';
+            }
         }
     }
 }
@@ -169,24 +176,37 @@ function updateMultiplierUI() {
     if (activeM) activeM.classList.add('active');
 }
 
-document.getElementById('plus-btn').addEventListener('click', () => {
-    if (!isSpinning && !isFreeSpinsMode) {
-        bet += 2;
-        betDisplay.innerText = `Tk ${bet.toFixed(2)}`;
-        updateFeatureBuyPrice();
-    }
-});
+const plusBtn = document.getElementById('plus-btn');
+if (plusBtn) {
+    plusBtn.addEventListener('click', () => {
+        if (!isSpinning && !isFreeSpinsMode) {
+            bet += 2;
+            if (betDisplay) betDisplay.innerText = `Tk ${bet.toFixed(2)}`;
+            updateFeatureBuyPrice();
+        }
+    });
+}
 
-document.getElementById('minus-btn').addEventListener('click', () => {
-    if (!isSpinning && !isFreeSpinsMode && bet > 2) {
-        bet -= 2;
-        betDisplay.innerText = `Tk ${bet.toFixed(2)}`;
-        updateFeatureBuyPrice();
-    }
-});
+const minusBtn = document.getElementById('minus-btn');
+if (minusBtn) {
+    minusBtn.addEventListener('click', () => {
+        if (!isSpinning && !isFreeSpinsMode && bet > 2) {
+            bet -= 2;
+            if (betDisplay) betDisplay.innerText = `Tk ${bet.toFixed(2)}`;
+            updateFeatureBuyPrice();
+        }
+    });
+}
 
-spinBtn.addEventListener('click', () => {
-    if (!isFreeSpinsMode) spin();
-});
+if (spinBtn) {
+    spinBtn.addEventListener('click', () => {
+        if (!isFreeSpinsMode) spin();
+    });
+}
 
-initGame();
+// ডোমেস্টিক লোড হলে ইনিশিয়েট হবে
+document.addEventListener('DOMContentLoaded', initGame);
+// ব্যাকআপ সেফটি কল
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initGame();
+}
