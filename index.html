@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild Bounty Showdown - PG Remake</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- পিজি মেগা মাল্টিপ্লায়ার বার -->
+        <div class="multiplier-bar">
+            <span id="m1" class="active">X1</span>
+            <span id="m2">X2</span>
+            <span id="m4">X4</span>
+            <span id="m512">X512</span>
+            <span id="m1024">X1024</span>
+        </div>
+
+        <!-- ৩-৪-৫-৫-৪-৩ ডায়মন্ড রিল গ্রিড -->
+        <div class="slot-machine" id="slot-grid">
+            <div class="reel" id="reel1" data-rows="3"></div>
+            <div class="reel" id="reel2" data-rows="4"></div>
+            <div class="reel" id="reel3" data-rows="5"></div>
+            <div class="reel" id="reel4" data-rows="5"></div>
+            <div class="reel" id="reel5" data-rows="4"></div>
+            <div class="reel" id="reel6" data-rows="3"></div>
+        </div>
+
+        <!-- ফিচার বাই বাটন (PG Style) -->
+        <div class="feature-buy-container">
+            <button id="feature-buy-btn">FEATURE BUY <br><span id="feature-price">Tk 150.00</span></button>
+        </div>
+
+        <!-- গেমের নিচের কন্ট্রোল প্যানেল -->
+        <div class="control-panel">
+            <div class="balance-info">
+                <span>ব্যালেন্স: <span id="balance">Tk 1000.00</span></span>
+                <span>বেট: <span id="bet">Tk 2.00</span></span>
+            </div>
+            <div class="buttons">
+                <button id="minus-btn">-</button>
+                <button id="spin-btn">🔥</button>
+                <button id="plus-btn">+</button>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
