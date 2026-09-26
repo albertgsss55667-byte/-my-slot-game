@@ -1,14 +1,14 @@
 const SYMBOLS = [
-    { name: 'wild', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'scatter', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'cowboy_h', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'pistol', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'whiskey', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'hat', img: 'https://gamingpirates.com', isHigh: true },
-    { name: 'A', img: 'https://gamingpirates.com', isHigh: false },
-    { name: 'K', img: 'https://gamingpirates.com', isHigh: false },
-    { name: 'Q', img: 'https://gamingpirates.com', isHigh: false },
-    { name: 'J', img: 'https://gamingpirates.com', isHigh: false }
+    { name: 'wild', img: 'https://icons8.com', isHigh: true },
+    { name: 'scatter', img: 'https://icons8.com', isHigh: true },
+    { name: 'cowboy_h', img: 'https://icons8.com', isHigh: true },
+    { name: 'pistol', img: 'https://icons8.com', isHigh: true },
+    { name: 'whiskey', img: 'https://icons8.com', isHigh: true },
+    { name: 'hat', img: 'https://icons8.com', isHigh: true },
+    { name: 'A', img: 'https://icons8.com', isHigh: false },
+    { name: 'K', img: 'https://icons8.com', isHigh: false },
+    { name: 'Q', img: 'https://icons8.com', isHigh: false },
+    { name: 'J', img: 'https://icons8.com', isHigh: false }
 ];
 
 const REEL_CONFIG =;
@@ -164,7 +164,7 @@ async function checkWinAndCascade() {
                 slotGrid.classList.remove('free-spins-active');
                 spinBtn.classList.remove('spinning');
                 isSpinning = false;
-                alert("ফ্রি স্পিন শেষ!");
+                alert("ف্রি স্পিন শেষ!");
             }
         } else {
             isSpinning = false;
