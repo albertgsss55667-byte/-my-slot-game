@@ -1,47 +1,82 @@
-<!DOCTYPE html>
-<html lang="bn">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wild Bounty - PG Remake</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0f0803; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #fff; overflow: hidden; }
-        .game-container { width: 100%; max-width: 430px; height: 96vh; background: linear-gradient(180deg, #26170d 0%, #170e08 100%); border: 3px solid #d4af37; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; box-shadow: 0 0 30px #000; }
-        .multiplier-bar { display: flex; justify-content: space-around; background: #432608; padding: 10px; border-radius: 12px; border: 2px solid #d4af37; font-weight: bold; font-size: 1.2rem; }
-        .multiplier-bar span { color: #6e543a; transition: all 0.3s; }
-        .multiplier-bar span.active { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; transform: scale(1.2); }
-        .slot-machine { display: flex; justify-content: space-between; align-items: center; height: 60%; background: rgba(0,0,0,0.5); border-radius: 15px; padding: 5px; }
-        .reel { flex: 1; margin: 0 2px; background: rgba(36,21,7,0.6); border: 1px solid #8c5d2b; border-radius: 5px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; height: 100%; }
-        .reel[data-rows="3"] { height: 60%; } .reel[data-rows="4"] { height: 80%; } .reel[data-rows="5"] { height: 100%; }
-        .symbol { width: 100%; aspect-ratio: 1; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; font-weight: bold; background: radial-gradient(#422812, #1f1207); border-bottom: 1px solid rgba(212,175,55,0.1); }
-        .feature-buy-container { display: flex; justify-content: center; margin: 5px 0; }
-        #feature-buy-btn { background: linear-gradient(#941616, #4a0505); border: 2px solid #d4af37; color: white; padding: 8px 25px; border-radius: 8px; cursor: pointer; text-align: center; font-weight: bold; font-size: 0.9rem; }
-        #feature-price { color: #ffd700; font-size: 0.8rem; }
-        .control-panel { background: #0d0703; padding: 12px; border-radius: 12px; border-top: 2px solid #d4af37; }
-        .balance-info { display: flex; justify-content: space-between; margin-bottom: 10px; color: #d4af37; font-weight: bold; }
-        .buttons { display: flex; justify-content: center; align-items: center; gap: 20px; }
-        .buttons button { background: #8c5d2b; border: 1px solid #fff; color: white; width: 40px; height: 40px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; }
-        #spin-btn { width: 70px; height: 70px; border-radius: 50%; background: #d4af37; font-size: 2.2rem; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wild Bounty Demo</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="game-container">
-        <div class="multiplier-bar">
-            <span id="m1" class="active">X1</span><span id="m2">X2</span><span id="m4">X4</span><span id="m512">X512</span><span id="m1024">X1024</span>
-        </div>
-        <div class="slot-machine" id="slot-grid">
-            <div class="reel" id="reel1" data-rows="3"></div><div class="reel" id="reel2" data-rows="4"></div><div class="reel" id="reel3" data-rows="5"></div>
-            <div class="reel" id="reel4" data-rows="5"></div><div class="reel" id="reel5" data-rows="4"></div><div class="reel" id="reel6" data-rows="3"></div>
-        </div>
-        <div class="feature-buy-container">
-            <button id="feature-buy-btn">FEATURE BUY <br><span id="feature-price">Tk 150.00</span></button>
-        </div>
-        <div class="control-panel">
-            <div class="balance-info"><span>ব্যালেন্স: <span id="balance">Tk 1000.00</span></span><span>বেট: <span id="bet">Tk 2.00</span></span></div>
-            <div class="buttons"><button id="minus-btn">-</button><button id="spin-btn">↻</button><button id="plus-btn">+</button></div>
-        </div>
+
+<div class="app">
+
+<header>
+    <b>WILD BOUNTY <small>SHOWDOWN</small></b>
+    <nav>⌕　⚙　☰</nav>
+</header>
+
+<main>
+
+<div class="jackpot">
+    DEMO JACKPOT　<b>৳ 25,680</b>
+</div>
+
+<section class="machine">
+
+    <div class="reel-window">
+        <div class="line"></div>
+        <div id="reels" class="reels"></div>
     </div>
-    <script src="index.js"></script>
+
+    <div id="msg">GOOD LUCK!</div>
+
+    <div class="controls">
+
+        <div class="bet">
+
+            <button onclick="betChange(-10)">−</button>
+
+            <span>
+                BET<br>
+                <b>৳ <i id="bet">10</i></b>
+            </span>
+
+            <button onclick="betChange(10)">+</button>
+
+        </div>
+
+        <button id="spin" class="spin" onclick="spin()">
+            ↻
+            <small>SPIN</small>
+        </button>
+
+        <div class="bal">
+            VIRTUAL BALANCE<br>
+            <b>৳ <i id="balance">1000</i></b>
+        </div>
+
+    </div>
+
+</section>
+
+<div class="tabs">
+    GAME　 <span>PAYTABLE</span>　<span>HISTORY</span>
+</div>
+
+<div class="info">
+    🤠 WILD　　⭐ SCATTER　　💰 BONUS
+</div>
+
+</main>
+
+<footer>
+    PLAY-MONEY DEMO • No real-money wagering, deposits or withdrawals
+</footer>
+
+</div>
+
+<script src="app.js"></script>
+
 </body>
 </html>
