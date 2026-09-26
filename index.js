@@ -1,13 +1,14 @@
 const SYMBOLS = [
-    { name: 'wild', img: 'images/sym_wild.png', isHigh: true },
-    { name: 'scatter', img: 'images/sym_scatter.png', isHigh: true },
-    { name: 'pistol', img: 'images/sym_pistol.png', isHigh: true },
-    { name: 'whiskey', img: 'images/sym_whiskey.png', isHigh: true },
-    { name: 'hat', img: 'images/sym_hat.png', isHigh: true },
-    { name: 'A', img: 'images/sym_a.png', isHigh: false },
-    { name: 'K', img: 'images/sym_k.png', isHigh: false },
-    { name: 'Q', img: 'images/sym_q.png', isHigh: false },
-    { name: 'J', img: 'images/sym_j.png', isHigh: false }
+    { name: 'wild', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'scatter', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'cowboy_h', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'pistol', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'whiskey', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'hat', img: 'https://gamingpirates.com', isHigh: true },
+    { name: 'A', img: 'https://gamingpirates.com', isHigh: false },
+    { name: 'K', img: 'https://gamingpirates.com', isHigh: false },
+    { name: 'Q', img: 'https://gamingpirates.com', isHigh: false },
+    { name: 'J', img: 'https://gamingpirates.com', isHigh: false }
 ];
 
 const REEL_CONFIG =;
@@ -26,7 +27,6 @@ const balanceDisplay = document.getElementById('balance');
 const betDisplay = document.getElementById('bet');
 const slotGrid = document.getElementById('slot-grid');
 const featureBuyBtn = document.getElementById('feature-buy-btn');
-const featurePriceDisplay = document.getElementById('feature-price');
 
 function initGame() {
     reels.forEach((reel, index) => {
@@ -36,7 +36,7 @@ function initGame() {
             reel.appendChild(createSymbolElement(getRandomSymbol()));
         }
     });
-    spinBtn.innerText = '↻'; // শুরুর আইকন
+    spinBtn.innerText = '↻';
     updateFeatureBuyPrice();
 }
 
@@ -74,8 +74,7 @@ async function spin() {
     }
 
     isSpinning = true;
-    spinBtn.classList.add('spinning'); // বাটন ঘোরানো শুরু
-    spinBtn.innerText = '↻';
+    spinBtn.classList.add('spinning');
     
     currentMultiplierIndex = 0;
     updateMultiplierUI();
@@ -163,15 +162,13 @@ async function checkWinAndCascade() {
             } else {
                 isFreeSpinsMode = false;
                 slotGrid.classList.remove('free-spins-active');
-                spinBtn.classList.remove('spinning'); // বাটন ঘোরানো বন্ধ
-                spinBtn.innerText = '↻';
+                spinBtn.classList.remove('spinning');
                 isSpinning = false;
                 alert("ফ্রি স্পিন শেষ!");
             }
         } else {
             isSpinning = false;
-            spinBtn.classList.remove('spinning'); // বাটন ঘোরানো বন্ধ
-            spinBtn.innerText = '↻';
+            spinBtn.classList.remove('spinning');
         }
     }
 }
