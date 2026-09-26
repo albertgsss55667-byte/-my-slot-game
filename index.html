@@ -76,8 +76,7 @@
             if (!reels || reels.length === 0) return;
             reels.forEach((reel, index) => {
                 const rows = REEL_CONFIG[index]; reel.innerHTML = '';
-                for (let i = 0; i < rows; i++) { reel.appendChild(createSymbolElement(getRandomSymbol())); }
-            });
+                for (let i = 0; i < rows; i++) { reel.appendChild(createSymbolElement(getRandomSymbol()));});
             if (spinBtn) spinBtn.innerText = '↻';
             updateFeatureBuyPrice();
         }
