@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0f0803;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 450px;
+    height: 96vh;
+    background: linear-gradient(180deg, #26170d 0%, #170e08 100%);
+    border: 3px solid #d4af37;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.multiplier-bar {
+    display: flex;
+    justify-content: space-around;
+    background: #432608;
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid #d4af37;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.multiplier-bar span {
+    color: #6e543a;
+    transition: all 0.3s;
+}
+
+.multiplier-bar span.active {
+    color: #ffcc00;
+    text-shadow: 0 0 10px #ffcc00;
+    transform: scale(1.2);
+}
+
+.slot-machine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60%;
+    background: rgba(0,0,0,0.5);
+    border-radius: 15px;
+    padding: 5px;
+    border: 2px solid transparent;
+}
+
+.slot-machine.free-spins-active {
+    border: 2px solid #ff3333;
+    animation: pulseGlow 1.5s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px #ff3333; }
+    100% { box-shadow: 0 0 20px #ffcc00; }
+}
+
+.reel {
+    flex: 1;
+    margin: 0 2px;
+    background: rgba(36,21,7,0.6);
+    border: 1px solid #8c5d2b;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
+.reel[data-rows="3"] { height: 60%; }
+.reel[data-rows="4"] { height: 80%; }
+.reel[data-rows="5"] { height: 100%; }
+
+.symbol {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    background: radial-gradient(#422812, #1f1207);
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+}
+
+.symbol.pop {
+    animation: explode 0.3s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); background: #ffcc00; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.feature-buy-container {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+#feature-buy-btn {
+    background: linear-gradient(#941616, #4a0505);
+    border: 2px solid #d4af37;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+#feature-price {
+    color: #ffd700;
+    font-size: 0.8rem;
+}
+
+.control-panel {
+    background: #0d0703;
+    padding: 12px;
+    border-radius: 12px;
+    border-top: 2px solid #d4af37;
+}
+
+.balance-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.buttons button {
+    background: #8c5d2b;
+    border: 1px solid #fff;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+#spin-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #d4af37;
+    font-size: 1.8rem;
+}
