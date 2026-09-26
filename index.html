@@ -3,202 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wild Bounty Showdown - PG Remake</title>
+    <title>Wild Bounty - PG Remake</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: #0f0803;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #fff;
-            overflow: hidden;
-        }
-
-        .game-container {
-            width: 100%;
-            max-width: 430px;
-            height: 96vh;
-            background: linear-gradient(180deg, #26170d 0%, #170e08 100%);
-            border: 3px solid #d4af37;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        .multiplier-bar {
-            display: flex;
-            justify-content: space-around;
-            background: #432608;
-            padding: 10px;
-            border-radius: 12px;
-            border: 2px solid #d4af37;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .multiplier-bar span {
-            color: #6e543a;
-            transition: all 0.3s;
-        }
-
-        .multiplier-bar span.active {
-            color: #ffcc00;
-            text-shadow: 0 0 10px #ffcc00;
-            transform: scale(1.2);
-        }
-
-        .slot-machine {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60%;
-            background: rgba(0,0,0,0.5);
-            border-radius: 15px;
-            padding: 5px;
-            border: 2px solid transparent;
-        }
-
-        .slot-machine.free-spins-active {
-            border: 2px solid #ff3333;
-            animation: pulseGlow 1.5s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 10px #ff3333; }
-            100% { box-shadow: 0 0 20px #ffcc00; }
-        }
-
-        .reel {
-            flex: 1;
-            margin: 0 2px;
-            background: rgba(36,21,7,0.6);
-            border: 1px solid #8c5d2b;
-            border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            overflow: hidden;
-            height: 100%;
-        }
-
-        .reel[data-rows="3"] { height: 60%; }
-        .reel[data-rows="4"] { height: 80%; }
-        .reel[data-rows="5"] { height: 100%; }
-
-        .symbol {
-            width: 100%;
-            aspect-ratio: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: radial-gradient(#422812, #1f1207);
-            border-bottom: 1px solid rgba(212,175,55,0.1);
-        }
-
-        .symbol.pop {
-            animation: explode 0.3s ease-out forwards;
-        }
-
-        @keyframes explode {
-            0% { transform: scale(1); background: #ffcc00; }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-        .feature-buy-container {
-            display: flex;
-            justify-content: center;
-            margin: 5px 0;
-        }
-
-        #feature-buy-btn {
-            background: linear-gradient(#941616, #4a0505);
-            border: 2px solid #d4af37;
-            color: white;
-            padding: 8px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        #feature-price {
-            color: #ffd700;
-            font-size: 0.8rem;
-        }
-
-        .control-panel {
-            background: #0d0703;
-            padding: 12px;
-            border-radius: 12px;
-            border-top: 2px solid #d4af37;
-        }
-
-        .balance-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: #d4af37;
-            font-weight: bold;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .buttons button {
-            background: #8c5d2b;
-            border: 1px solid #fff;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        #spin-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: #d4af37;
-            font-size: 2.2rem;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        #spin-btn.spinning {
-            animation: buttonRotate 0.5s linear infinite;
-        }
-
-        @keyframes buttonRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: #0f0803; font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; color: #fff; overflow: hidden; }
+        .game-container { width: 100%; max-width: 430px; height: 96vh; background: linear-gradient(180deg, #26170d 0%, #170e08 100%); border: 3px solid #d4af37; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; box-shadow: 0 0 30px #000; }
+        .multiplier-bar { display: flex; justify-content: space-around; background: #432608; padding: 10px; border-radius: 12px; border: 2px solid #d4af37; font-weight: bold; font-size: 1.2rem; }
+        .multiplier-bar span { color: #6e543a; transition: all 0.3s; }
+        .multiplier-bar span.active { color: #ffcc00; text-shadow: 0 0 10px #ffcc00; transform: scale(1.2); }
+        .slot-machine { display: flex; justify-content: space-between; align-items: center; height: 60%; background: rgba(0,0,0,0.5); border-radius: 15px; padding: 5px; }
+        .slot-machine.free-spins-active { border: 2px solid #ff3333; animation: pulseGlow 1s infinite alternate; }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 10px #ff3333; } 100% { box-shadow: 0 0 20px #ffcc00; } }
+        .reel { flex: 1; margin: 0 2px; background: rgba(36,21,7,0.6); border: 1px solid #8c5d2b; border-radius: 5px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; height: 100%; }
+        .reel[data-rows="3"] { height: 60%; } .reel[data-rows="4"] { height: 80%; } .reel[data-rows="5"] { height: 100%; }
+        .symbol { width: 100%; aspect-ratio: 1; display: flex; justify-content: center; align-items: center; font-size: 1.8rem; font-weight: bold; background: radial-gradient(#422812, #1f1207); border-bottom: 1px solid rgba(212,175,55,0.1); }
+        .symbol.pop { animation: explode 0.3s ease-out forwards; }
+        @keyframes explode { 0% { transform: scale(1); background: #ffcc00; } 100% { transform: scale(0); opacity: 0; } }
+        .feature-buy-container { display: flex; justify-content: center; margin: 5px 0; }
+        #feature-buy-btn { background: linear-gradient(#941616, #4a0505); border: 2px solid #d4af37; color: white; padding: 8px 25px; border-radius: 8px; cursor: pointer; text-align: center; font-weight: bold; font-size: 0.9rem; }
+        #feature-price { color: #ffd700; font-size: 0.8rem; }
+        .control-panel { background: #0d0703; padding: 12px; border-radius: 12px; border-top: 2px solid #d4af37; }
+        .balance-info { display: flex; justify-content: space-between; margin-bottom: 10px; color: #d4af37; font-weight: bold; }
+        .buttons { display: flex; justify-content: center; align-items: center; gap: 20px; }
+        .buttons button { background: #8c5d2b; border: 1px solid #fff; color: white; width: 40px; height: 40px; border-radius: 8px; font-size: 1.2rem; cursor: pointer; }
+        #spin-btn { width: 70px; height: 70px; border-radius: 50%; background: #d4af37; font-size: 2.2rem; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        #spin-btn.spinning { animation: buttonRotate 0.5s linear infinite; }
+        @keyframes buttonRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <!-- পিজি মেগা মাল্টিপ্লায়ার বার -->
         <div class="multiplier-bar">
             <span id="m1" class="active">X1</span>
             <span id="m2">X2</span>
@@ -206,8 +40,6 @@
             <span id="m512">X512</span>
             <span id="m1024">X1024</span>
         </div>
-
-        <!-- ৩-৪-৫-৫-৪-৩ ডায়মন্ড রিল গ্রিড -->
         <div class="slot-machine" id="slot-grid">
             <div class="reel" id="reel1" data-rows="3"></div>
             <div class="reel" id="reel2" data-rows="4"></div>
@@ -216,13 +48,9 @@
             <div class="reel" id="reel5" data-rows="4"></div>
             <div class="reel" id="reel6" data-rows="3"></div>
         </div>
-
-        <!-- FEATURE BUY বাটন -->
         <div class="feature-buy-container">
             <button id="feature-buy-btn">FEATURE BUY <br><span id="feature-price">Tk 150.00</span></button>
         </div>
-
-        <!-- কন্ট্রোল প্যানেল -->
         <div class="control-panel">
             <div class="balance-info">
                 <span>ব্যালেন্স: <span id="balance">Tk 1000.00</span></span>
@@ -236,91 +64,84 @@
         </div>
     </div>
 
-    <!-- গেম লজিক স্ক্রিপ্ট -->
     <script>
         const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', '🎩', 'A', 'K', 'Q', 'J'];
         const REEL_CONFIG =;
         const MULTIPLIER_STEPS =;
+        let balance = 1000.00, bet = 2.00, currentMultiplierIndex = 0, isSpinning = false, isFreeSpinsMode = false, freeSpinsLeft = 0;
 
-        let balance = 1000.00;
-        let bet = 2.00;
-        let currentMultiplierIndex = 0;
-        let isSpinning = false;
-        let isFreeSpinsMode = false;
-        let freeSpinsLeft = 0;
-
-        const reels = document.querySelectorAll('.reel');
-        const spinBtn = document.getElementById('spin-btn');
-        const balanceDisplay = document.getElementById('balance');
-        const betDisplay = document.getElementById('bet');
-        const slotGrid = document.getElementById('slot-grid');
-        const featureBuyBtn = document.getElementById('feature-buy-btn');
-        const featurePriceDisplay = document.getElementById('feature-price');
+        const reels = document.querySelectorAll('.reel'), spinBtn = document.getElementById('spin-btn'), balanceDisplay = document.getElementById('balance'), betDisplay = document.getElementById('bet'), slotGrid = document.getElementById('slot-grid'), featureBuyBtn = document.getElementById('feature-buy-btn'), featurePriceDisplay = document.getElementById('feature-price');
 
         function initGame() {
             if (!reels || reels.length === 0) return;
             reels.forEach((reel, index) => {
-                const rows = REEL_CONFIG[index];
-                reel.innerHTML = '';
-                for (let i = 0; i < rows; i++) {
-                    reel.appendChild(createSymbolElement(getRandomSymbol()));
-                }
+                const rows = REEL_CONFIG[index]; reel.innerHTML = '';
+                for (let i = 0; i < rows; i++) { reel.appendChild(createSymbolElement(getRandomSymbol())); }
             });
             if (spinBtn) spinBtn.innerText = '↻';
             updateFeatureBuyPrice();
         }
-
-        function getRandomSymbol() {
-            return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-        }
-
-        function createSymbolElement(sym) {
-            const div = document.createElement('div');
-            div.className = 'symbol';
-            div.innerText = sym;
-            return div;
-        }
-
-        function updateFeatureBuyPrice() {
-            if (featurePriceDisplay) {
-                featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`;
-            }
-        }
+        function getRandomSymbol() { return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]; }
+        function createSymbolElement(sym) { const div = document.createElement('div'); div.className = 'symbol'; div.innerText = sym; return div; }
+        function updateFeatureBuyPrice() { if (featurePriceDisplay) featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`; }
 
         async function spin() {
             if (isSpinning) return;
-            
             if (!isFreeSpinsMode) {
-                if (balance < bet) {
-                    alert("পর্যাপ্ত ব্যালেন্স নেই!");
-                    return;
-                }
-                balance -= bet;
-                if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+                if (balance < bet) { alert("ব্যালেন্স নেই!"); return; }
+                balance -= bet; if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
             }
-
             isSpinning = true;
-            if (spinBtn) {
-                spinBtn.classList.add('spinning');
-                spinBtn.innerText = '↻';
-            }
-            
-            currentMultiplierIndex = 0;
-            updateMultiplierUI();
+            if (spinBtn) { spinBtn.classList.add('spinning'); spinBtn.innerText = '↻'; }
+            currentMultiplierIndex = 0; updateMultiplierUI();
 
             let spinPromises = Array.from(reels).map((reel, index) => {
                 return new Promise((resolve) => {
                     let cycles = 0;
                     let interval = setInterval(() => {
                         reel.innerHTML = '';
-                        for (let i = 0; i < REEL_CONFIG[index]; i++) {
-                            reel.appendChild(createSymbolElement(getRandomSymbol()));
-                        }
-                        cycles++;
-                        if (cycles > 10 + index * 2) {
-                            clearInterval(interval);
-                            resolve();
-                        }
+                        for (let i = 0; i < REEL_CONFIG[index]; i++) { reel.appendChild(createSymbolElement(getRandomSymbol())); }
+                        cycles++; if (cycles > 10 + index * 2) { clearInterval(interval); resolve(); }
                     }, 60);
                 });
-});await Promise.all(spinPromises);checkWinAndCascade();}if (featureBuyBtn) {featureBuyBtn.addEventListener('click', () => {if (isSpinning || isFreeSpinsMode) return;let cost = bet * 75;if (balance < cost) {alert("ফিচার কেনার জন্য পর্যাপ্ত ব্যালেন্স নেই!");return;}balance -= cost;if (balanceDisplay) balanceDisplay.innerText = Tk ${balance.toFixed(2)};isFreeSpinsMode = true;freeSpinsLeft = 10;if (slotGrid) slotGrid.classList.add('free-spins-active');setTimeout(spin, 1000);});}async function checkWinAndCascade() {let hasWin = false;reels.forEach((reel) => {const symbols = reel.querySelectorAll('.symbol');let counts = {};symbols.forEach(s => counts[s.innerText] = (counts[s.innerText] || 0) + 1);symbols.forEach(s => {if (counts[s.innerText] >= 2 && s.innerText !== 'A' && s.innerText !== 'J' && s.innerText !== 'Q') {s.classList.add('pop');hasWin = true;}});});if (hasWin) {let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];let winAmount = bet * activeMultiplier * 2;balance += winAmount;if (balanceDisplay) balanceDisplay.innerText = Tk ${balance.toFixed(2)};if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) {currentMultiplierIndex++;}await new Promise(r => setTimeout(r, 400));reels.forEach((reel, index) => {reel.querySelectorAll('.symbol.pop').forEach(p => p.remove());const needed = REEL_CONFIG[index] - reel.querySelectorAll('.symbol').length;for (let i = 0; i < needed; i++) {reel.insertBefore(createSymbolElement(getRandomSymbol()), reel.firstChild);}});updateMultiplierUI();setTimeout(checkWinAndCascade, 400);} else {if (isFreeSpinsMode) {freeSpinsLeft--;if (freeSpinsLeft > 0) {setTimeout(spin, 800);} else {isFreeSpinsMode = false;if (slotGrid) slotGrid.classList.remove('free-spins-active');if (spinBtn) {spinBtn.classList.remove('spinning');spinBtn.innerText = '↻';}isSpinning = false;alert("ফ্রি স্পিন শেষ!");}} else {isSpinning = false;if (spinBtn) {spinBtn.classList.remove('spinning');spinBtn.innerText = '↻';}}}}function updateMultiplierUI() {document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));const activeM = document.getElementById(m${MULTIPLIER_STEPS[currentMultiplierIndex]});if (activeM) activeM.classList.add('active');}const plusBtn = document.getElementById('plus-btn');if (plusBtn) {plusBtn.addEventListener('click', () => {if (!isSpinning && !isFreeSpinsMode) {bet += 2;if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)};updateFeatureBuyPrice();}});}const minusBtn = document.getElementById('minus-btn');if (minusBtn) {minusBtn.addEventListener('click', () => {if (!isSpinning && !isFreeSpinsMode && bet > 2) {bet -= 2;if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)};updateFeatureBuyPrice();}});}if (spinBtn) {spinBtn.addEventListener('click', () => {if (!isFreeSpinsMode) spin();});}window.onload = initGame;initGame();
+            });
+            await Promise.all(spinPromises); checkWinAndCascade();
+        }
+
+        if (featureBuyBtn) {
+            featureBuyBtn.addEventListener('click', () => {
+                if (isSpinning || isFreeSpinsMode) return;
+                let cost = bet * 75; if (balance < cost) { alert("ব্যালেন্স নেই!"); return; }
+                balance -= cost; if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+                isFreeSpinsMode = true; freeSpinsLeft = 10; if (slotGrid) slotGrid.classList.add('free-spins-active');
+                setTimeout(spin, 1000);
+            });
+        }
+
+        async function checkWinAndCascade() {
+            let hasWin = false;
+            reels.forEach((reel) => {
+                const symbols = reel.querySelectorAll('.symbol'); let counts = {};
+                symbols.forEach(s => counts[s.innerText] = (counts[s.innerText] || 0) + 1);
+                symbols.forEach(s => { if (counts[s.innerText] >= 2 && s.innerText !== 'A' && s.innerText !== 'J' && s.innerText !== 'Q') { s.classList.add('pop'); hasWin = true; } });
+            });
+
+            if (hasWin) {
+                let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];
+                balance += bet * activeMultiplier * 2; if (balanceDisplay) balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
+                if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) currentMultiplierIndex++;
+                await new Promise(r => setTimeout(r, 400));
+                reels.forEach((reel, index) => {
+                    reel.querySelectorAll('.symbol.pop').forEach(p => p.remove());
+                    const needed = REEL_CONFIG[index] - reel.querySelectorAll('.symbol').length;
+                    for (let i = 0; i < needed; i++) { reel.insertBefore(createSymbolElement(getRandomSymbol()), reel.firstChild); }
+                });
+                updateMultiplierUI(); setTimeout(checkWinAndCascade, 400);
+            } else {
+                if (isFreeSpinsMode) {
+                    freeSpinsLeft--;
+                    if (freeSpinsLeft > 0) { setTimeout(spin, 800); } 
+                    else { isFreeSpinsMode = false; if (slotGrid) slotGrid.classList.remove('free-spins-active'); if (spinBtn) { spinBtn.classList.remove('spinning'); spinBtn.innerText = '↻'; } isSpinning = false; alert("ফ্রি স্পিন শেষ!"); }
+                } else { isSpinning = false; if (spinBtn) { spinBtn.classList.remove('spinning'); spinBtn.innerText = '↻'; } }
+            }
+}function updateMultiplierUI() {document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));const activeM = document.getElementById(m${MULTIPLIER_STEPS[currentMultiplierIndex]});if (activeM) activeM.classList.add('active');}if (document.getElementById('plus-btn')) { document.getElementById('plus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode) { bet += 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (document.getElementById('minus-btn')) { document.getElementById('minus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode && bet > 2) { bet -= 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (spinBtn) { spinBtn.addEventListener('click', () => { if (!isFreeSpinsMode) spin(); }); }window.onload = initGame;setTimeout(initGame, 500); // ব্যাকআপ সেফটি লোড
