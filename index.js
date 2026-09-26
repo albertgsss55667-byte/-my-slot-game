@@ -1,16 +1,6 @@
-const SYMBOLS = [
-    { name: 'wild', img: 'https://icons8.com', isHigh: true },
-    { name: 'scatter', img: 'https://icons8.com', isHigh: true },
-    { name: 'cowboy_h', img: 'https://icons8.com', isHigh: true },
-    { name: 'pistol', img: 'https://icons8.com', isHigh: true },
-    { name: 'whiskey', img: 'https://icons8.com', isHigh: true },
-    { name: 'hat', img: 'https://icons8.com', isHigh: true },
-    { name: 'A', img: 'https://icons8.com', isHigh: false },
-    { name: 'K', img: 'https://icons8.com', isHigh: false },
-    { name: 'Q', img: 'https://icons8.com', isHigh: false },
-    { name: 'J', img: 'https://icons8.com', isHigh: false }
-];
-
+// কাউবয় ওয়াইল্ড বাউন্টি থিম ইমোজি ম্যাপিং
+// 🤠 = কাউবয় মেয়ে (WILD), 🪙 = সোনার বার (SCATTER), 🔫 = পিস্তল, 🍾 = বোতল, 🎩 = হ্যাট
+const SYMBOLS = ['🤠', '🪙', '🔫', '🍾', '🎩', 'A', 'K', 'Q', 'J'];
 const REEL_CONFIG =;
 const MULTIPLIER_STEPS =;
 
@@ -27,6 +17,7 @@ const balanceDisplay = document.getElementById('balance');
 const betDisplay = document.getElementById('bet');
 const slotGrid = document.getElementById('slot-grid');
 const featureBuyBtn = document.getElementById('feature-buy-btn');
+const featurePriceDisplay = document.getElementById('feature-price');
 
 function initGame() {
     reels.forEach((reel, index) => {
@@ -44,21 +35,17 @@ function getRandomSymbol() {
     return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
 }
 
-function createSymbolElement(symbolData) {
+function createSymbolElement(sym) {
     const div = document.createElement('div');
     div.className = 'symbol';
-    div.dataset.name = symbolData.name;
-    
-    const img = document.createElement('img');
-    img.src = symbolData.img;
-    img.alt = symbolData.name;
-    
-    div.appendChild(img);
+    div.innerText = sym;
     return div;
 }
 
 function updateFeatureBuyPrice() {
-    featureBuyBtn.innerHTML = `FEATURE BUY <br><span style="font-size:0.75rem; color:#ffd700;">Tk ${(bet * 75).toFixed(2)}</span>`;
+    if (featurePriceDisplay) {
+        featurePriceDisplay.innerText = `Tk ${(bet * 75).toFixed(2)}`;
+    }
 }
 
 async function spin() {
@@ -66,7 +53,7 @@ async function spin() {
     
     if (!isFreeSpinsMode) {
         if (balance < bet) {
-            alert("ব্যালেন্স নেই!");
+            alert("পর্যাপ্ত ব্যালেন্স নেই!");
             return;
         }
         balance -= bet;
@@ -75,6 +62,7 @@ async function spin() {
 
     isSpinning = true;
     spinBtn.classList.add('spinning');
+    spinBtn.innerText = '↻';
     
     currentMultiplierIndex = 0;
     updateMultiplierUI();
@@ -104,7 +92,7 @@ featureBuyBtn.addEventListener('click', () => {
     if (isSpinning || isFreeSpinsMode) return;
     let cost = bet * 75;
     if (balance < cost) {
-        alert("ব্যালেন্স নেই!");
+        alert("ফিচার কেনার জন্য পর্যাপ্ত ব্যালেন্স নেই!");
         return;
     }
     balance -= cost;
@@ -122,11 +110,10 @@ async function checkWinAndCascade() {
     reels.forEach((reel) => {
         const symbols = reel.querySelectorAll('.symbol');
         let counts = {};
-        symbols.forEach(s => counts[s.dataset.name] = (counts[s.dataset.name] || 0) + 1);
+        symbols.forEach(s => counts[s.innerText] = (counts[s.innerText] || 0) + 1);
         
         symbols.forEach(s => {
-            const name = s.dataset.name;
-            if (counts[name] >= 2 && name !== 'A' && name !== 'J') {
+            if (counts[s.innerText] >= 2 && s.innerText !== 'A' && s.innerText !== 'J' && s.innerText !== 'Q') {
                 s.classList.add('pop');
                 hasWin = true;
             }
@@ -135,7 +122,8 @@ async function checkWinAndCascade() {
 
     if (hasWin) {
         let activeMultiplier = MULTIPLIER_STEPS[currentMultiplierIndex];
-        balance += bet * activeMultiplier * 1.8;
+        let winAmount = bet * activeMultiplier * 2;
+        balance += winAmount;
         balanceDisplay.innerText = `Tk ${balance.toFixed(2)}`;
         
         if (currentMultiplierIndex < MULTIPLIER_STEPS.length - 1) {
@@ -163,12 +151,14 @@ async function checkWinAndCascade() {
                 isFreeSpinsMode = false;
                 slotGrid.classList.remove('free-spins-active');
                 spinBtn.classList.remove('spinning');
+                spinBtn.innerText = '↻';
                 isSpinning = false;
-                alert("ف্রি স্পিন শেষ!");
+                alert("ফ্রি স্পিন শেষ!");
             }
         } else {
             isSpinning = false;
             spinBtn.classList.remove('spinning');
+            spinBtn.innerText = '↻';
         }
     }
 }
