@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -144,4 +144,4 @@
                     else { isFreeSpinsMode = false; if (slotGrid) slotGrid.classList.remove('free-spins-active'); if (spinBtn) { spinBtn.classList.remove('spinning'); spinBtn.innerText = '↻'; } isSpinning = false; alert("ফ্রি স্পিন শেষ!"); }
                 } else { isSpinning = false; if (spinBtn) { spinBtn.classList.remove('spinning'); spinBtn.innerText = '↻'; } }
             }
-}function updateMultiplierUI() {document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));const activeM = document.getElementById(m${MULTIPLIER_STEPS[currentMultiplierIndex]});if (activeM) activeM.classList.add('active');}if (document.getElementById('plus-btn')) { document.getElementById('plus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode) { bet += 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (document.getElementById('minus-btn')) { document.getElementById('minus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode && bet > 2) { bet -= 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (spinBtn) { spinBtn.addEventListener('click', () => { if (!isFreeSpinsMode) spin(); }); }window.onload = initGame;setTimeout(initGame, 500); // ব্যাকআপ সেফটি লোড
+}function updateMultiplierUI() {document.querySelectorAll('.multiplier-bar span').forEach(el => el.classList.remove('active'));const activeM = document.getElementById(m${MULTIPLIER_STEPS[currentMultiplierIndex]});if (activeM) activeM.classList.add('active');}if (document.getElementById('plus-btn')) { document.getElementById('plus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode) { bet += 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (document.getElementById('minus-btn')) { document.getElementById('minus-btn').addEventListener('click', () => { if (!isSpinning && !isFreeSpinsMode && bet > 2) { bet -= 2; if (betDisplay) betDisplay.innerText = Tk ${bet.toFixed(2)}; updateFeatureBuyPrice(); } }); }if (spinBtn) { spinBtn.addEventListener('click', () => { if (!isFreeSpinsMode) spin(); }); }window.onload = initGame;setTimeout(initGame, 500);
